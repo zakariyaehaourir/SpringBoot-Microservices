@@ -26,4 +26,23 @@ public class GlobalExceptionHandler {
         ApiResponse<Void> response = ApiResponse.error(HttpStatus.UNPROCESSABLE_CONTENT.value() , "Validation failed for one or more fields" , errors);
         return ResponseEntity.unprocessableContent().body(response);
     }
+
+
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ApiResponse<Void>> handleNotFound(Exception ex){
+        ApiResponse<Void> response = ApiResponse.error(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ApiResponse<Void>> handleInternalServerError(Exception ex){
+        ApiResponse<Void> response = ApiResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "An unexpected internal error occurred");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
 }

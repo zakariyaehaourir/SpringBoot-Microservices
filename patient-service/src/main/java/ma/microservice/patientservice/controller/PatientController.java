@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import ma.microservice.patientservice.dto.PatientCreateRequest;
 import ma.microservice.patientservice.dto.PatientCreatedResponse;
 import ma.microservice.patientservice.dto.PatientList;
+import ma.microservice.patientservice.dto.PatientUpdateRequest;
 import ma.microservice.patientservice.service.PatientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 
 @RequiredArgsConstructor
@@ -38,5 +40,11 @@ public class PatientController {
                 .toUri();
 
         return  ResponseEntity.created(location).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@Valid @RequestBody PatientUpdateRequest request, @PathVariable  String id){
+        this.patientService.updatePatient(UUID.fromString(id) , request);
+        return ResponseEntity.noContent().build();
     }
 }
