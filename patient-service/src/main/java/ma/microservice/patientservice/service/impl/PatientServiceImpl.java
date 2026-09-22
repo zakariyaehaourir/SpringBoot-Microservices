@@ -5,6 +5,7 @@ import ma.microservice.patientservice.dto.PatientCreateRequest;
 import ma.microservice.patientservice.dto.PatientCreatedResponse;
 import ma.microservice.patientservice.dto.PatientList;
 import ma.microservice.patientservice.dto.PatientUpdateRequest;
+import ma.microservice.patientservice.exception.PatientEmailExistException;
 import ma.microservice.patientservice.exception.ResourceNotFoundException;
 import ma.microservice.patientservice.mapper.PatientMapper;
 import ma.microservice.patientservice.model.Patient;
@@ -39,6 +40,9 @@ public class PatientServiceImpl implements PatientService {
     public void updatePatient(UUID uuid, PatientUpdateRequest request) {
         Patient existingPatient = this.patientRepository.findById(uuid).
                 orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + uuid));
+
+        if(this.patientRepository.existsByEmailAndIdNot(request.getEmail() , uuid))
+            throw new PatientEmailExistException("Patient with email " + request.getEmail()  +" already exists");
 
         existingPatient.setName(request.getName());
         existingPatient.setAddress(request.getAddress());

@@ -37,6 +37,12 @@ public class GlobalExceptionHandler {
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(PatientEmailExistException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ApiResponse<Void>> handlePatientEmailExists(Exception ex){
+        ApiResponse<Void> response = ApiResponse.error((HttpStatus.CONFLICT.value()) , ex.getMessage());
+        return  ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

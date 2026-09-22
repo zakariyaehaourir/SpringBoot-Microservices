@@ -20,8 +20,8 @@ PUT localhost:4444/patients/123e4567-e89b-12d3-a456-426614174000
 Content-Type: application/json
 
 {
-  "name": "John Doe UPDATED",
-  "email": "john.doe@example.com",
+  "name": "John Doe UPDATED 2",
+  "email": "kafka_test11@exampleffff.com",
   "address": "123 main street",
   "birthDate": "1995-09-09"
 }
