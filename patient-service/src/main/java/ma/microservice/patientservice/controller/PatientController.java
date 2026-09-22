@@ -1,13 +1,18 @@
 package ma.microservice.patientservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import ma.microservice.patientservice.dto.PatientCreateRequest;
+import ma.microservice.patientservice.dto.PatientCreatedResponse;
 import ma.microservice.patientservice.dto.PatientList;
 import ma.microservice.patientservice.service.PatientService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 
@@ -21,5 +26,17 @@ public class PatientController {
     @GetMapping()
     public ResponseEntity<List<PatientList>> patients(){
         return ResponseEntity.ok(this.patientService.getAllPatients());
+    }
+
+    @PostMapping()
+    public ResponseEntity<PatientCreatedResponse> create(@Valid @RequestBody PatientCreateRequest request){
+        PatientCreatedResponse response = this.patientService.createPatient(request);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(response.getId())
+                .toUri();
+
+        return  ResponseEntity.created(location).body(response);
     }
 }

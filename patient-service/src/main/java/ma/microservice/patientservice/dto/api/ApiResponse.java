@@ -1,4 +1,4 @@
-package ma.microservice.patientservice.dto;
+package ma.microservice.patientservice.dto.api;
 
 import lombok.Builder;
 

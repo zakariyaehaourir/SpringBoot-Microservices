@@ -1,8 +1,11 @@
 package ma.microservice.patientservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import ma.microservice.patientservice.dto.PatientCreateRequest;
+import ma.microservice.patientservice.dto.PatientCreatedResponse;
 import ma.microservice.patientservice.dto.PatientList;
 import ma.microservice.patientservice.mapper.PatientMapper;
+import ma.microservice.patientservice.model.Patient;
 import ma.microservice.patientservice.repository.PatientRepository;
 import ma.microservice.patientservice.service.PatientService;
 import org.springframework.stereotype.Service;
@@ -19,5 +22,12 @@ public class PatientServiceImpl implements PatientService {
           this.patientRepository.findAll()
         );
 
+    }
+
+    @Override
+    public PatientCreatedResponse createPatient(PatientCreateRequest request) {
+        Patient savedEntity = this.patientRepository.saveAndFlush(PatientMapper.toModal(request));
+
+        return PatientMapper.toPatientCreatedResponse(savedEntity);
     }
 }

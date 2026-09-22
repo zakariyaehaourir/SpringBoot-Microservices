@@ -1,3 +1,16 @@
-### GET request to example server
+### GET all petients
 GET localhost:4444/patients
+###
+
+### POST one patient
+POST localhost:4444/patients
+Content-Type: application/json
+
+
+{
+  "name": "John Doe Kafka Test",
+  "email": "kafka_test11@example.com",
+  "address": "123 main street22",
+  "birthDate": "1995-09-09"
+}
 ###
