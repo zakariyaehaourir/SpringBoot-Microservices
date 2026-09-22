@@ -53,4 +53,12 @@ public class PatientServiceImpl implements PatientService {
 
 
     }
+
+    @Override
+    public void deletePatient(UUID id) {
+        Patient existingPatient = this.patientRepository.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Patient not found with id: " + id));
+
+        this.patientRepository.delete(existingPatient);
+    }
 }

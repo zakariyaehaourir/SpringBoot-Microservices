@@ -6,6 +6,7 @@ import ma.microservice.patientservice.dto.PatientCreateRequest;
 import ma.microservice.patientservice.dto.PatientCreatedResponse;
 import ma.microservice.patientservice.dto.PatientList;
 import ma.microservice.patientservice.dto.PatientUpdateRequest;
+import ma.microservice.patientservice.dto.api.ApiResponse;
 import ma.microservice.patientservice.service.PatientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -46,5 +47,12 @@ public class PatientController {
     public ResponseEntity<Void> update(@Valid @RequestBody PatientUpdateRequest request, @PathVariable  String id){
         this.patientService.updatePatient(UUID.fromString(id) , request);
         return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        this.patientService.deletePatient(UUID.fromString(id));
+        return ResponseEntity.noContent().build();
+
     }
 }

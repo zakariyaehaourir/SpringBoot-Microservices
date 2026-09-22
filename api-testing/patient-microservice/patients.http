@@ -26,3 +26,8 @@ Content-Type: application/json
   "birthDate": "1995-09-09"
 }
 ###
+
+### Delete existing Petient
+DELETE localhost:4444/patients/123e4567-e89b-12d3-a456-426614174000
+
+###

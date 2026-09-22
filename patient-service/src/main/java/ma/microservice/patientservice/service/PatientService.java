@@ -14,4 +14,6 @@ public interface PatientService {
     public PatientCreatedResponse createPatient(PatientCreateRequest request);
 
     public void updatePatient(UUID uuid ,PatientUpdateRequest request);
+
+    public void deletePatient(UUID id);
 }
