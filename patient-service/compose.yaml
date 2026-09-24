@@ -5,7 +5,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     env_file:
-      - ./patient-service/.env
+      - .env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 10s
@@ -19,12 +19,12 @@ services:
   patient.api:
     container_name: patient-backend
     build:
-      context: ./patient-service
+      context: .
       dockerfile: ./infra/Dockerfile
     ports:
-      - "${SERVER_PORT:-8080}:8080"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     env_file:
-      - ./patient-service/.env
+      - .env
 
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://patient.database:5432/${POSTGRES_DB}
