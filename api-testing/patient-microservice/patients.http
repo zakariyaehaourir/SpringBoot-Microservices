@@ -1,9 +1,9 @@
 ### GET all petients
-GET localhost:4444/patients
+GET localhost:8081/api/patients
 ###
 
 ### POST one patient
-POST localhost:4444/patients
+POST localhost:8081/api/patients
 Content-Type: application/json
 
 
@@ -16,7 +16,7 @@ Content-Type: application/json
 ###
 
 ### Updating existing Petient
-PUT localhost:4444/patients/123e4567-e89b-12d3-a456-426614174000
+PUT localhost:8081/api/patients/123e4567-e89b-12d3-a456-426614174000
 Content-Type: application/json
 
 {
@@ -28,6 +28,6 @@ Content-Type: application/json
 ###
 
 ### Delete existing Petient
-DELETE localhost:4444/patients/123e4567-e89b-12d3-a456-426614174000
+DELETE localhost:8081/api/patients/123e4567-e89b-12d3-a456-426614174000
 
 ###
