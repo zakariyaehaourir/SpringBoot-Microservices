@@ -1,0 +1,47 @@
+services:
+  patient.database:
+    container_name: patient-service-database
+    image: postgres:16
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_patient_backup:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  patient.api:
+    container_name: patient-backend
+    build:
+      context: .
+      dockerfile: ./infra/Dockerfile
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    env_file:
+      - .env
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://patient.database:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+
+    networks:
+      app-network:
+
+    depends_on:
+      patient.database:
+          condition: service_healthy
+
+
+volumes:
+  db_patient_backup:
+
+networks:
+  app-network:
+    external: true

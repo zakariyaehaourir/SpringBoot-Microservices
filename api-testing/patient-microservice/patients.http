@@ -1,0 +1,33 @@
+### GET all petients
+GET localhost:8081/api/patients
+###
+
+### POST one patient
+POST localhost:8081/api/patients
+Content-Type: application/json
+
+
+{
+  "name": "John Doe Kafka Test",
+  "email": "kafka_test11@example.com",
+  "address": "123 main street22",
+  "birthDate": "1995-09-09"
+}
+###
+
+### Updating existing Petient
+PUT localhost:8081/api/patients/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+
+{
+  "name": "John Doe UPDATED 2",
+  "email": "kafka_test11@exampleffff.com",
+  "address": "123 main street",
+  "birthDate": "1995-09-09"
+}
+###
+
+### Delete existing Petient
+DELETE localhost:8081/api/patients/123e4567-e89b-12d3-a456-426614174000
+
+###
