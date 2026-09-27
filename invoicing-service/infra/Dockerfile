@@ -6,6 +6,7 @@ WORKDIR /app
 
 RUN apk add --no-cache libc6-compat gcompat
 COPY pom.xml .
+COPY src/main/proto ./src/main/proto
 RUN mvn dependency:go-offline -B
 
 COPY src ./src
@@ -17,6 +18,6 @@ WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring && chown -R spring:spring /app
 USER spring:spring
 
-COPY --from=build --chown=spring:sprig /app/target/*.jar invoicing-service.jar
+COPY --from=build --chown=spring:spring /app/target/*.jar invoicing-service.jar
 
 ENTRYPOINT ["java" , "-jar" , "invoicing-service.jar" ]

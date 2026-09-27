@@ -15,7 +15,5 @@ message BillingRequest {
 
 message BillingResponse {
   string invoiceId = 1;
-
-
 }
 
