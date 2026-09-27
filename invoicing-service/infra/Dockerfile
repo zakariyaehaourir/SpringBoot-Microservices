@@ -1,3 +1,6 @@
+# Build stage
+FROM maven:3.9.11-eclipse-temurin-21-alpine AS build
+
 WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
@@ -13,4 +16,4 @@ USER spring:spring
 
 COPY --from=build --chown=spring:sprig /app/target/*.jar invoicing-service.jar
 
-ENTRYPOINT["java" , "-jar" , "invoicing-service.jar" ]
+ENTRYPOINT ["java" , "-jar" , "invoicing-service.jar" ]
