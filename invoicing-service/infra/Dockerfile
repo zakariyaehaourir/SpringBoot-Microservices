@@ -2,6 +2,9 @@
 FROM maven:3.9.11-eclipse-temurin-21-alpine AS build
 
 WORKDIR /app
+#install deps to execute grpc
+
+RUN apk add --no-cache libc6-compat gcompat
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
