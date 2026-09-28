@@ -16,7 +16,7 @@ services:
     networks:
       - app-network
 
-  patient.api:
+  invoice.api:
     container_name: invoicing-backend
     build:
       context: .
