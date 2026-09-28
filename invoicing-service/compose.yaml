@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,6 +23,7 @@ services:
       dockerfile: ./infra/Dockerfile
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${GRPC_PORT:-9090}:9090"
     env_file:
       - .env
 

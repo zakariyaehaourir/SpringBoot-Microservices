@@ -1,21 +1,24 @@
 spring:
   application:
     name: patient-service
-
+  profiles:
+    active: ${ACTIVE_PROFILE:dev}
   jpa:
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
     show-sql: true
-
-
   sql:
     init:
       mode: always
-  profiles:
-    active: ${ACTIVE_PROFILE:dev}
 
 
+  grpc:
+    client:
+      channels:
+        invoicing-channel:
+          address: "${GRPC_INVOICING_URL:static://localhost:9090}"
+          secure: false
 
 server:
   port: ${SERVER_PORT:8080}
