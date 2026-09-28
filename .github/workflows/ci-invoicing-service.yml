@@ -1,0 +1,58 @@
+name: Ci Invoice microservice
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'invoicing-service/**'
+
+  pull_request:
+    branches:
+      - develop
+      - main
+    paths:
+      - 'invoicing-service/**'
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+
+    steps:
+      - name: Cloning Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setuping project environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          cache-dependency-path: 'invoicing-service/pom.xml'
+
+      - name: Build the project
+        run: |
+          cd ./invoicing-service
+          mvn clean compile -B
+
+      - name: Execute tests
+        run: |
+          cd ./invoicing-service
+          mvn test
+
+      - name: Qodana Code Quality Scan
+        uses: JetBrains/qodana-action@v2026.2
+        with:
+          args: --project-dir,invoicing-service
+
+      - name: Build Docker image
+        run: |
+          cd invoicing-service
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          docker build -f ./infra/Dockerfile -t invoice-backend:$SHORT_SHA .

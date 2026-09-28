@@ -1,9 +1,9 @@
 services:
-  patient.database:
-    container_name: patient-service-database
+  invoice.database:
+    container_name: invoice-service-database
     image: postgres:16
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     env_file:
       - .env
     healthcheck:
@@ -12,12 +12,12 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - db_patient_backup:/var/lib/postgresql/data
+      - db_invoice_backup:/var/lib/postgresql/data
     networks:
       - app-network
 
-  patient.api:
-    container_name: patient-backend
+  invoice.api:
+    container_name: invoicing-backend
     build:
       context: .
       dockerfile: ./infra/Dockerfile
@@ -27,7 +27,7 @@ services:
       - .env
 
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://patient.database:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://invoice.database:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
 
@@ -35,12 +35,12 @@ services:
       app-network:
 
     depends_on:
-      patient.database:
-          condition: service_healthy
+      invoice.database:
+        condition: service_healthy
 
 
 volumes:
-  db_patient_backup:
+  db_invoice_backup:
 
 networks:
   app-network:
