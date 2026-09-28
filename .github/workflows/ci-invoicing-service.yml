@@ -1,4 +1,4 @@
-name: ci-invoicing-service
+name: Ci Invoice microservice
 
 on:
   push:
