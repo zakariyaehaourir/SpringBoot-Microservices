@@ -23,6 +23,7 @@ services:
       dockerfile: ./infra/Dockerfile
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${GRPC_PORT:-9090}:9090"
     env_file:
       - .env
 

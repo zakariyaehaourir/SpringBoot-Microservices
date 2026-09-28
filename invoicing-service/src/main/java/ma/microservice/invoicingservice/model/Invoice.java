@@ -1,9 +1,9 @@
 package ma.microservice.invoicingservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,10 +23,17 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @NotBlank
+    @Size(max = 50)
     private String fullName;
+    @Email
+    @Column(nullable = false , unique = true)
     private String email;
+
+    @Column(nullable = false , unique = true)
     private UUID patient_id;
 
+    @Column(nullable = true)
     private  float amount;
     private LocalDateTime createdAt;
 }

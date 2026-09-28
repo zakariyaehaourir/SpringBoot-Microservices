@@ -24,7 +24,3 @@ server:
   port: ${SERVER_PORT:8080}
   servlet:
     context-path: /api
-logging:
-  level:
-    # Affiche en détail l'initialisation et les adresses des canaux clients gRPC
-    org.springframework.grpc.client: DEBUG
