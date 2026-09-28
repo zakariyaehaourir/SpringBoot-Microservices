@@ -53,5 +53,6 @@ jobs:
 
       - name: Build Docker image
         run: |
+          cd invoicing-service
           SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
           docker build -f ./infra/Dockerfile -t invoice-backend:$SHORT_SHA .
