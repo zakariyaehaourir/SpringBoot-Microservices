@@ -3,7 +3,7 @@ GET localhost:8081/api/patients
 ###
 
 ### POST one patient
-POST localhost:8081/api/patients
+POST localhost:8080/api/patients
 Content-Type: application/json
 
 

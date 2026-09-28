@@ -1,10 +1,10 @@
 package ma.microservice.patientservice.grpc;
 
-import com.google.type.DateTime;
+
 import invoicing.*;
 import io.grpc.StatusRuntimeException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,11 +14,15 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class InvoiceServiceGrpcClient {
 
 
     private final InvoicingServiceGrpc.InvoicingServiceBlockingStub invoicingBlockingStub;
+
+    @Autowired
+    public InvoiceServiceGrpcClient(InvoicingServiceGrpc.InvoicingServiceBlockingStub invoicingChannelStub) {
+        this.invoicingBlockingStub = invoicingChannelStub;
+    }
 
     public String createFactureForPatient(UUID patientId , String email , String fullName , LocalDateTime createdAt){
         DateTimeFormatter formateur = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
