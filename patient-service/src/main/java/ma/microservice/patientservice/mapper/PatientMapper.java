@@ -3,6 +3,7 @@ package ma.microservice.patientservice.mapper;
 import ma.microservice.patientservice.dto.PatientCreateRequest;
 import ma.microservice.patientservice.dto.PatientCreatedResponse;
 import ma.microservice.patientservice.dto.PatientList;
+import ma.microservice.patientservice.dto.events.PatientCreatedEvent;
 import ma.microservice.patientservice.model.Patient;
 
 import java.util.List;
@@ -40,5 +41,14 @@ public class PatientMapper {
                 .email(patient.getEmail())
                 .birthDate(patient.getBirthDate())
                 .build();
+    }
+
+    public static PatientCreatedEvent toPatientCreatedEvent(Patient savedEntity){
+        return new PatientCreatedEvent(
+                savedEntity.getId(),
+                savedEntity.getName(),
+                savedEntity.getEmail(),
+                savedEntity.getRegisteredAt()
+        );
     }
 }

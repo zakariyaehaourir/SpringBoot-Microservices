@@ -19,8 +19,16 @@ spring:
         invoicing-channel:
           address: "${GRPC_INVOICING_URL:static://localhost:9090}"
           secure: false
-
+  kafka:
+    bootstrap-servers: "${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.ByteArraySerializer
 server:
   port: ${SERVER_PORT:8080}
   servlet:
     context-path: /api
+
+kafka:
+  topics:
+    patient-topic: PATIENT-TOPIC

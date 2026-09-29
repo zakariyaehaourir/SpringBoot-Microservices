@@ -1,6 +1,6 @@
 package ma.microservice.patientservice.service.impl;
 
-import invoicing.InvoicingServiceGrpc;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import ma.microservice.patientservice.dto.PatientCreateRequest;
@@ -13,6 +13,7 @@ import ma.microservice.patientservice.grpc.InvoiceServiceGrpcClient;
 import ma.microservice.patientservice.mapper.PatientMapper;
 import ma.microservice.patientservice.model.Patient;
 import ma.microservice.patientservice.repository.PatientRepository;
+import ma.microservice.patientservice.service.PatientProducer;
 import ma.microservice.patientservice.service.PatientService;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.UUID;
 public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
     private final InvoiceServiceGrpcClient invoiceServiceGrpcClient;
+    private final PatientProducer patientProducer;
 
     public List<PatientList> getAllPatients(){
         return PatientMapper.toPatientList(
@@ -37,6 +39,7 @@ public class PatientServiceImpl implements PatientService {
     public PatientCreatedResponse createPatient(PatientCreateRequest request) {
         Patient savedEntity = this.patientRepository.saveAndFlush(PatientMapper.toModal(request));
         this.invoiceServiceGrpcClient.createFactureForPatient(savedEntity.getId() , savedEntity.getEmail() , savedEntity.getName() , savedEntity.getRegisteredAt());
+        this.patientProducer.publishPatientCreatedEvent(PatientMapper.toPatientCreatedEvent(savedEntity));
         return PatientMapper.toPatientCreatedResponse(savedEntity);
     }
 
