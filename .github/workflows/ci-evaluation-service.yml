@@ -1,0 +1,57 @@
+name: Ci Evaluation and analytics Service
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'evaluation-service/**'
+
+  pull_request:
+    branches:
+      - develop
+      - main
+    paths:
+      - 'evaluation-service/**'
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+
+    steps:
+      - name: Cloning Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setuping project environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+          cache-dependency-path: 'evaluation-service/pom.xml'
+
+      - name: Build the project
+        run: |
+          cd ./evaluation-service
+          mvn clean compile -B
+
+      - name: Execute tests
+        run: |
+          cd ./evaluation-service
+          mvn test
+
+      - name: Qodana Code Quality Scan
+        uses: JetBrains/qodana-action@v2026.2
+        with:
+          args: --project-dir,evaluation-service
+
+      - name: Build Docker image
+        run: |
+          cd evaluation-service
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          docker build -f ./infra/Dockerfile -t evaluation-backend:$SHORT_SHA .
