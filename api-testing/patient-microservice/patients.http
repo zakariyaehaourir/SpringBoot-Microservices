@@ -3,13 +3,13 @@ GET localhost:8081/api/patients
 ###
 
 ### POST one patient
-POST localhost:8081/api/patients
+POST localhost:8080/api/patients
 Content-Type: application/json
 
 
 {
-  "name": "John Doe Kafka Test",
-  "email": "kafka_test11@example.com",
+  "name": "Zakariyae HAOURIR",
+  "email": "zakariyae@yahho.com",
   "address": "123 main street22",
   "birthDate": "1995-09-09"
 }

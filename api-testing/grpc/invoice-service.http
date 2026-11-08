@@ -1,0 +1,8 @@
+GRPC 127.0.0.1:9090/invoicing.InvoicingService/CreateBillingAccount
+
+{
+  "patientId": "fa84b80b-df17-48f0-a15d-83bdf7f33947",
+  "name": "Zakariyae",
+  "email": "zak@example.com",
+  "createdAt": "2026-09-27T21:35:00Z"
+}

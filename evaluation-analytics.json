@@ -1,0 +1,11 @@
+{
+  "patientId" : "40a09a23-5db5-4478-94b7-7f8adc461b49",
+  "name" : "John Doe Kafka Test",
+  "email" : "kafka__test@example.com",
+  "createdAt" : "2026-11-08T20:54:45.586204745"
+}{
+  "patientId" : "3bffa2ae-4388-46cf-985f-989f5c7f16a0",
+  "name" : "Zakariyae HAOURIR",
+  "email" : "zakariyae@yahho.com",
+  "createdAt" : "2026-11-08T20:57:05.866982309"
+}
