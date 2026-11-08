@@ -1,0 +1,16 @@
+services:
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: ./infra/Dockerfile
+    ports:
+      - "8000:8060"
+    environment:
+      - ACTIVE_PROFILE=docker
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

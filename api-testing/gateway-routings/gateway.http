@@ -1,0 +1,15 @@
+### GET all petients throught gateway
+GET localhost:8000/patient-service/api/patients
+
+### POST one patient
+POST localhost:8000/patient-service/api/patients
+Content-Type: application/json
+
+
+{
+  "name": "Zakariyae HAOURIR 22",
+  "email": "zakariyae22@yahho.com",
+  "address": "123 main street22",
+  "birthDate": "1995-09-09"
+}
+###
