@@ -1,5 +1,5 @@
 ### GET all petients
-GET localhost:8081/api/patients
+GET localhost:8080/api/patients
 ###
 
 ### POST one patient
