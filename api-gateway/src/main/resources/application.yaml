@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: patient-service-route
+              uri: ${PATIENT_UPSTREAM:http://localhost:8080}
+              predicates:
+                - Path=/patient-service/api/patients/**
+              filters:
+                - StripPrefix=1
+
+            - id: invoice-service-route
+              uri: ${INVOICE_UPSTREAM:http://localhost:8083}
+              predicates:
+                - Path=/invoicing-service/api/v1/invoices/**
+              filters:
+                - StripPrefix=1
+
+            - id: evaluation-service-route
+              uri: ${EVALUATION_UPSTREAM:http://localhost:8082}
+              predicates:
+                - Path=/evaluation-service/api/v1/**
+              filters:
+                - StripPrefix=1
+  profiles:
+    active: ${ACTIVE_PROFILE:dev}
+
+server:
+  port: ${SERVER_PORT:8000}
